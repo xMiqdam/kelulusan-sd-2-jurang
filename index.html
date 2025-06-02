@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengumuman Kelulusan 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to right, #ffffff, #e6f0ff);
+      color: #333;
+      overflow-x: hidden;
+    }
+    header {
+      background: linear-gradient(90deg, #005ea2, #007bff);
+      color: white;
+      padding: 2rem 1rem;
+      text-align: center;
+      animation: fadeInDown 1s ease-out;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .container {
+      max-width: 500px;
+      margin: 2rem auto;
+      padding: 2.5rem;
+      border-radius: 20px;
+      background: white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+    .container.pop {
+      animation: popUp 0.5s ease forwards;
+    }
+    .container::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: -50%;
+      left: -50%;
+      background: radial-gradient(circle, #e0f0ff 10%, transparent 70%);
+      transform: rotate(45deg);
+      z-index: 0;
+      animation: floatingLight 8s linear infinite;
+    }
+    h2 {
+      color: #005ea2;
+      position: relative;
+      z-index: 1;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    input[type="text"]:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 0.75rem;
+      background-color: #005ea2;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+    button:hover {
+      background-color: #004080;
+      transform: scale(1.03);
+    }
+    .note {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: #777;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .result {
+      text-align: center;
+      padding: 2rem;
+    }
+    .result h3 {
+      color: #005ea2;
+      margin-bottom: 0.5rem;
+    }
+    .result p {
+      font-size: 1.1rem;
+      margin: 0.3rem 0;
+    }
+    .back-btn {
+      margin-top: 1.5rem;
+      background-color: #f0ad4e;
+    }
+    .hidden {
+      display: none;
+    }
+    .illustration {
+      display: block;
+      margin: 0 auto 1.5rem;
+      max-width: 120px;
+      animation: bounce 1.5s infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes floatingLight {
+      0% { transform: rotate(45deg) translateX(0); }
+      100% { transform: rotate(45deg) translateX(200%); }
+    }
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Cek Kelulusan Siswa Tahun 2025</h1>
+  </header>
+  <main>
+    <div class="container" id="loginPage">
+      <img src="https://cdn-icons-png.flaticon.com/512/3135/3135743.png" alt="Ilustrasi Kelulusan" class="illustration">
+      <h2>Masuk untuk Melihat Hasil</h2>
+      <input type="text" id="nama" placeholder="Nama Lengkap">
+      <input type="text" id="nis" placeholder="NIS">
+      <button onclick="cekKelulusan()">Lihat Hasil</button>
+      <p class="note">Masukkan nama lengkap dan NIS sesuai data sekolah untuk melihat status kelulusan Anda.</p>
+    </div>
+
+    <div class="container hidden" id="resultPage">
+      <div class="result">
+        <h3 id="resultNama"></h3>
+        <p id="resultNIS"></p>
+        <p id="resultStatus"></p>
+        <p id="resultPesan"></p>
+        <button class="back-btn" onclick="kembali()">Kembali ke Beranda</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const dataSiswa = [
+      { nama: "Alya Nurul Zahro", nis: "2074", lulus: true },
+      { nama: "Galang Ainun Cahya", nis: "2023", lulus: true },
+      { nama: "Gendhis Zahra Renatha", nis: "2024", lulus: true },
+      { nama: "Mahtaliza Zayyana Ahla", nis: "2047", lulus: true },
+      { nama: "Melinda Rosaliana Sari", nis: "2025", lulus: true },
+      { nama: "Natasya Kirana Putri", nis: "2026", lulus: true },
+      { nama: "Riski Asafa", nis: "2027", lulus: true },
+      { nama: "Risqi Arsya Ramadhan", nis: "2028", lulus: true },
+      { nama: "Taufiq Umar", nis: "2029", lulus: true }
+    ];
+
+    function cekKelulusan() {
+      const nama = document.getElementById('nama').value.trim();
+      const nis = document.getElementById('nis').value.trim();
+      const siswa = dataSiswa.find(s => s.nama.toLowerCase() === nama.toLowerCase() && s.nis === nis);
+
+      if (siswa) {
+        document.getElementById('resultNama').innerText = siswa.nama;
+        document.getElementById('resultNIS').innerText = `NIS: ${siswa.nis}`;
+        if (siswa.lulus) {
+          document.getElementById('resultStatus').innerText = "Selamat, Anda LULUS!";
+          document.getElementById('resultPesan').innerText = "Selamat! Ini adalah awal dari perjalanan panjang menuju impianmu. Teruslah belajar dan berkarya!";
+        } else {
+          document.getElementById('resultStatus').innerText = "Mohon Maaf, Anda BELUM LULUS.";
+          document.getElementById('resultPesan').innerText = "Jangan menyerah. Kegagalan hari ini bukan akhir dari segalanya, tapi batu loncatan menuju kesuksesanmu.";
+        }
+        document.getElementById('loginPage').classList.add('hidden');
+        const resultPage = document.getElementById('resultPage');
+        resultPage.classList.remove('hidden');
+        resultPage.classList.add('pop');
+      } else {
+        alert("Data tidak ditemukan. Periksa kembali nama dan NIS Anda.");
+      }
+    }
+
+    function kembali() {
+      document.getElementById('loginPage').classList.remove('hidden');
+      const resultPage = document.getElementById('resultPage');
+      resultPage.classList.add('hidden');
+      resultPage.classList.remove('pop');
+      document.getElementById('nama').value = "";
+      document.getElementById('nis').value = "";
+    }
+  </script>
+</body>
+</html>
